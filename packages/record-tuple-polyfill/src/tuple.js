@@ -113,10 +113,7 @@ define(Tuple.prototype, {
 
     popped() {
         if (this.length <= 1) return Tuple();
-
-        return createTupleFromIterableObject(
-            Array.from(this).slice(0, this.length - 1),
-        );
+        return fromArray(this, "slice", 0, this.length - 1);
     },
 
     pushed(...vals) {
@@ -128,7 +125,7 @@ define(Tuple.prototype, {
     },
 
     shifted() {
-        return createTupleFromIterableObject(Array.from(this).slice(1));
+        return fromArray(this, "slice", 1);
     },
 
     unshifted(...vals) {
@@ -148,9 +145,7 @@ define(Tuple.prototype, {
     },
 
     concat(...values) {
-        return createTupleFromIterableObject(
-            Array.from(this).concat(...values),
-        );
+        return fromArray(this, "concat", ...values);
     },
 
     includes: Array.prototype.includes,
@@ -162,25 +157,17 @@ define(Tuple.prototype, {
     lastIndexOf: Array.prototype.lastIndexOf,
 
     sliced(start, end) {
-        return createTupleFromIterableObject(
-            Array.from(this).slice(start, end),
-        );
+        return fromArray(this, "slice", start, end);
     },
 
     entries() {
-        return createTupleFromIterableObject(
-            Array.from(this)
-                .entries()
-                .map(e => createTupleFromIterableObject(e)),
-        )[Symbol.iterator]();
+        return Array.prototype.entries.call(this);
     },
 
     every: Array.prototype.every,
 
     filter(callback, thisArg) {
-        return createTupleFromIterableObject(
-            Array.from(this).filter(wrapTupleCallback(this, callback), thisArg),
-        );
+        return fromArray(this, "filter", callback, thisArg);
     },
 
     find: Array.prototype.find,
@@ -190,15 +177,11 @@ define(Tuple.prototype, {
     forEach: Array.prototype.forEach,
 
     keys() {
-        return createTupleFromIterableObject(Array.from(this).keys())[
-            Symbol.iterator
-        ]();
+        return Array.prototype.keys.call(this);
     },
 
     map(callback, thisArg) {
-        return createTupleFromIterableObject(
-            Array.from(this).map(wrapTupleCallback(this, callback), thisArg),
-        );
+        return fromArray(this, "map", callback, thisArg);
     },
 
     reduce: Array.prototype.reduce,
@@ -239,13 +222,8 @@ define(Tuple.prototype, {
     },
 });
 
-function wrapTupleCallback(tuple, callback) {
-    return function(element, index) {
-        return callback.call(this, element, index, tuple);
-    };
-}
-function wrapTupleReduceCallback(tuple, callback) {
-    return function(accumulator, element, index) {
-        return callback.call(this, accumulator, element, index, tuple);
-    };
+function fromArray(obj, name, ...args) {
+    return createTupleFromIterableObject(
+        Array.prototype[name].apply(obj, args),
+    );
 }

@@ -161,6 +161,12 @@ test("Tuple.prototype.toString", () => {
     expect(Tuple.prototype[Symbol.toStringTag]).toBe("Tuple");
 });
 
+test("Tuple.prototype.sliced", () => {
+    expect(Tuple().sliced(0, 2)).toBe(Tuple());
+    expect(Tuple(1, 2, 3, 4).sliced(1)).toBe(Tuple(2, 3, 4));
+    expect(Tuple(1, 2, 3, 4).sliced(-2)).toBe(Tuple(3, 4));
+    expect(Tuple(1, 2, 3, 4).sliced(1, 3)).toBe(Tuple(2, 3));
+});
 test("Tuple.prototype.popped", () => {
     expect(Tuple().popped()).toBe(Tuple());
     expect(Tuple(1).popped()).toBe(Tuple());
