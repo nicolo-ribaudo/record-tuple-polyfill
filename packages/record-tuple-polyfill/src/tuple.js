@@ -191,7 +191,7 @@ define(Tuple.prototype, {
     some: Array.prototype.some,
 
     values() {
-        return this[Symbol.iterator]();
+        return Array.prototype.values.call(this);
     },
 
     with(index, value) {
@@ -205,21 +205,10 @@ define(Tuple.prototype, {
 
     toString: Array.prototype.toString,
     toLocaleString: Array.prototype.toLocaleString,
+});
 
-    [Symbol.iterator]() {
-        let index = 0;
-        return {
-            next: () => {
-                if (index < this.length) {
-                    const result = { value: this[index], done: false };
-                    index++;
-                    return result;
-                } else {
-                    return { value: undefined, done: true };
-                }
-            },
-        };
-    },
+define(Tuple.prototype, {
+    [Symbol.iterator]: Tuple.prototype.values,
 });
 
 function fromArray(obj, name, ...args) {
