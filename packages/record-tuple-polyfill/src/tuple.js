@@ -181,7 +181,9 @@ define(Tuple.prototype, {
     },
 
     map(callback, thisArg) {
-        return fromArray(this, "map", callback, thisArg);
+        return fromArray(this, "map", function(value, key, tuple) {
+            return validateProperty(callback.call(thisArg, value, key, tuple));
+        });
     },
 
     reduce: Array.prototype.reduce,

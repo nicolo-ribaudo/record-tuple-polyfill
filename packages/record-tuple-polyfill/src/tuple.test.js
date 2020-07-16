@@ -178,6 +178,19 @@ test("Tuple.prototype.pushed", () => {
     expect(Tuple().pushed(1, 2, 3)).toBe(Tuple(1, 2, 3));
     expect(Tuple(1, 2, 3).pushed(4, 5, 6)).toBe(Tuple(1, 2, 3, 4, 5, 6));
 });
+describe("Tuple.prototype.map", () => {
+    test("validates the callback result after each iteration", () => {
+        const t = Tuple(1, 2, 3);
+        let i = 0;
+        expect(() =>
+            t.map(v => {
+                i++;
+                return { v };
+            }),
+        ).toThrow();
+        expect(i).toBe(1);
+    });
+});
 // TODO: Tuple prototype methods
 
 describe("correct descriptors", () => {
