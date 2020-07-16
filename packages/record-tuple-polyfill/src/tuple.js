@@ -153,21 +153,13 @@ define(Tuple.prototype, {
         );
     },
 
-    includes(valueToFind, fromIndex) {
-        return Array.from(this).includes(valueToFind, fromIndex);
-    },
+    includes: Array.prototype.includes,
 
-    indexOf(valueToFind, fromIndex) {
-        return Array.from(this).indexOf(valueToFind, fromIndex);
-    },
+    indexOf: Array.prototype.indexOf,
 
-    join(separator) {
-        return Array.from(this).join(separator);
-    },
+    join: Array.prototype.join,
 
-    lastIndexOf(valueToFind, fromIndex) {
-        return Array.from(this).lastIndexOf(valueToFind, fromIndex);
-    },
+    lastIndexOf: Array.prototype.lastIndexOf,
 
     sliced(start, end) {
         return createTupleFromIterableObject(
@@ -183,12 +175,7 @@ define(Tuple.prototype, {
         )[Symbol.iterator]();
     },
 
-    every(callback, thisArg) {
-        return Array.from(this).every(
-            wrapTupleCallback(this, callback),
-            thisArg,
-        );
-    },
+    every: Array.prototype.every,
 
     filter(callback, thisArg) {
         return createTupleFromIterableObject(
@@ -196,26 +183,11 @@ define(Tuple.prototype, {
         );
     },
 
-    find(callback, thisArg) {
-        return Array.from(this).find(
-            wrapTupleCallback(this, callback),
-            thisArg,
-        );
-    },
+    find: Array.prototype.find,
 
-    findIndex(callback, thisArg) {
-        return Array.from(this).findIndex(
-            wrapTupleCallback(this, callback),
-            thisArg,
-        );
-    },
+    findIndex: Array.prototype.findIndex,
 
-    forEach(callback, thisArg) {
-        return Array.from(this).forEach(
-            wrapTupleCallback(this, callback),
-            thisArg,
-        );
-    },
+    forEach: Array.prototype.forEach,
 
     keys() {
         return createTupleFromIterableObject(Array.from(this).keys())[
@@ -229,26 +201,11 @@ define(Tuple.prototype, {
         );
     },
 
-    reduce(callback, initialValue) {
-        return Array.from(this).reduce(
-            wrapTupleReduceCallback(this, callback),
-            initialValue,
-        );
-    },
+    reduce: Array.prototype.reduce,
 
-    reduceRight(callback, initialValue) {
-        return Array.from(this).reduceRight(
-            wrapTupleReduceCallback(this, callback),
-            initialValue,
-        );
-    },
+    reduceRight: Array.prototype.reduceRight,
 
-    some(callback, thisArg) {
-        return Array.from(this).some(
-            wrapTupleCallback(this, callback),
-            thisArg,
-        );
-    },
+    some: Array.prototype.some,
 
     values() {
         return this[Symbol.iterator]();
